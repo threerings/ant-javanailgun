@@ -4,7 +4,7 @@
   <groupId>com.threerings.ant</groupId>
   <artifactId>javanailgun</artifactId>
   <packaging>jar</packaging>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <name>javanailgun</name>
 
   <dependencies>
