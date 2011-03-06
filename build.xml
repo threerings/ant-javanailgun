@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<project name="javanailgun" default="dist" basedir="." xmlns:artifact="urn:maven-artifact-ant">
+  <property name="src.dir" location="src/main/java"/>
+  <property name="deploy.dir" location="dist"/>
+  <property name="classes.dir" location="${deploy.dir}/classes"/>
+  <property name="jar.file" location="${deploy.dir}/${ant.project.name}.jar"/>
+
+  <property name="ooo-build.vers" value="2.1"/>
+  <ant antfile="bootstrap.xml"/>
+  <import file="${user.home}/.m2/ooo-build/${ooo-build.vers}/ooo-build.xml"/>
+
+  <target name="-prepare" depends="-init-ooo">
+    <mkdir dir="${classes.dir}"/>
+    <mavendep pom="pom.xml"/>
+  </target>
+
+  <target name="compile" depends="-prepare">
+    <ooojavac srcdir="${src.dir}" destdir="${classes.dir}" version="1.5" classpathref="pom.xml.path"/>
+  </target>
+
+  <target name="dist" depends="compile">
+    <jar jarfile="${jar.file}">
+      <fileset dir="${classes.dir}" includes="**"/>
+      <fileset dir="src/main/resources" includes="**"/>
+    </jar>
+  </target>
+
+  <target name="test" depends="compile">
+    <path id="classpath">
+      <pathelement location="${classes.dir}"/>
+      <path refid="pom.xml.path"/>
+    </path>
+    <taskdef name="javanailgun" classname="com.threerings.ant.JavaNailgunTask"
+        classpathref="classpath"/>
+    <javanailgun ngdest="test.sh" ngrun="${ngrun}" ngwrite="${ngwrite}" classpath="dest.jar" fork="true" failonerror="true" classname="flex2.tools.Mxmlc">
+      <jvmarg value="-Djava.awt.headless=true"/>
+      <arg value="blah"/>
+      <arg value="hello hello"/>
+      <arg value="-Dheheh-fhde"/>
+    </javanailgun>
+  </target>
+
+  <target name="distclean">
+    <delete dir="${deploy.dir}"/>
+  </target>
+
+  <target name="maven-deploy" depends="dist"
+      description="Deploys our build artifacts to a Maven repository.">
+    <mavendeploy pom="pom.xml" file="${jar.file}" srcdir="${src.dir}"/>
+  </target>
+</project>

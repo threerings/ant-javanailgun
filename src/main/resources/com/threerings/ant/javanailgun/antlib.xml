@@ -1,0 +1,4 @@
+<antlib>
+  <taskdef name="javanailgun" classname="com.threerings.ant.JavaNailgunTask"/>
+</antlib>
+
