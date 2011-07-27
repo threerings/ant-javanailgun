@@ -10,5 +10,5 @@ The task is defined in `com/threerings/ant/javanailgun/antlib.xml` in the javana
 
 After that, you can use the `javanailgun` task.
 
-Alternatively, if you're using [ooo-build](http://code.google.com/p/ooo-build/), you can use `<maventaskdef groupId="com.threerings.ant" artifactId="javanailgun" version="1.0"/>` to load it.
+Alternatively, if you're using [ooo-build](https://github.com/threerings/ooo-build), you can use `<maventaskdef groupId="com.threerings.ant" artifactId="javanailgun" version="1.0"/>` to load it.
 
